@@ -11,10 +11,12 @@ conn = listener.accept()
 print('connection accepted from {0}'.format(listener.last_accepted))
 
 while True:
-    msg = conn.recv()
-    if msg is not None:
+    try:
+        msg = conn.recv()
         print('got message: {0}'.format(msg))
         if msg == 'close':
             conn.close()
             break
+    except EOFError:
+        pass
 listener.close()
